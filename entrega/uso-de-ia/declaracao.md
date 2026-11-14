@@ -9,7 +9,8 @@
 
 - Revisou o diff e o código do CLI em busca de defeitos não cobertos pelos testes fornecidos.
 - Identificou e corrigiu dois defeitos adicionais: truncamento da leitura do CSV em 200 linhas e desempate incorreto do ranking de hotéis.
-- Adicionou dois testes de regressão em `tests/test_extra_regressions.py`.
+- Adicionou testes de regressão em `tests/test_extra_regressions.py`.
+- Ajustou o tratamento de moeda sem taxa para respeitar o código de saída `2` do contrato do CLI.
 - Executou os testes, o lint e o CLI na amostra e na base completa, validando os valores com um cálculo independente.
 - Redigiu o `README-ENTREGA.md` e este registro de sessão.
 

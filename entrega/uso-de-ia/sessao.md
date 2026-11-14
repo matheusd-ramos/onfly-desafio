@@ -22,14 +22,15 @@ Modelo: Big Pickle (provider `opencode`)
 4. Encontrou dois defeitos adicionais não cobertos pelos testes fornecidos:
    - leitura do CSV interrompida na 200ª linha (`repositories/csv_reservation_repository.py`);
    - desempate do ranking por `hotel_id` decrescente por causa do `reverse=True` (`services/report_builder.py`).
-5. Corrigiu os dois defeitos e adicionou dois testes de regressão em `tests/test_extra_regressions.py`.
-6. Rodou `pytest -q` (7 testes passando) e `ruff check src tests` (sem avisos).
-7. Executou o CLI na amostra de validação e conferiu todos os valores da tabela do enunciado.
-8. Executou o CLI na base completa (300 linhas) e validou resumo, `by_month` e `top_hotels` contra um cálculo independente em `Decimal`.
-9. Reescreveu o `entrega/README-ENTREGA.md` com defeitos, causas raiz, investigação, validação e resultado dos testes.
+5. Corrigiu os dois defeitos e adicionou testes de regressão em `tests/test_extra_regressions.py`.
+6. Reforçou o contrato de erros: normalizou a moeda para maiúsculas e passou a retornar código `2` (`InputFileError`) quando falta taxa de câmbio, em vez de erro inesperado.
+7. Rodou `pytest -q` (9 testes passando) e `ruff check src tests` (sem avisos).
+8. Executou o CLI na amostra de validação e conferiu todos os valores da tabela do enunciado.
+9. Executou o CLI na base completa (300 linhas) e validou resumo, `by_month` e `top_hotels` contra um cálculo independente em `Decimal`.
+10. Reescreveu o `entrega/README-ENTREGA.md` com defeitos, causas raiz, investigação, validação e resultado dos testes.
 
 ## Resultado final
 
-- `pytest -q`: 7 passed (5 testes fornecidos sem alteração + 2 adicionados).
+- `pytest -q`: 9 passed (5 testes fornecidos sem alteração + 4 adicionados).
 - Amostra: 12 reservas, 9 confirmadas, 28 noites, `7566.00`, média `270.21`.
 - Base completa: 300 reservas, 235 confirmadas, 1.347 noites, `396170.00`, média `294.11`.

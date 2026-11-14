@@ -1,6 +1,12 @@
 """Testes adicionais: defeitos encontrados durante a revisão."""
 
+from decimal import Decimal
+
+import pytest
 from helpers import run_cli
+
+from onfly_report.exceptions import InputFileError
+from onfly_report.services.currency_converter import convert_to_brl
 
 
 def test_all_reservations_are_read_from_large_file(tmp_path):
@@ -26,3 +32,19 @@ def test_top_hotels_ties_are_broken_by_hotel_id_ascending(tmp_path):
     )
 
     assert [hotel["hotel_id"] for hotel in report["top_hotels"]] == ["H01", "H02"]
+
+
+def test_currency_is_case_insensitive(tmp_path):
+    """A moeda é normalizada antes da consulta à tabela de câmbio."""
+    report = run_cli(
+        tmp_path,
+        [{"reservation_id": "R-1", "currency": "usd", "amount": "100.00"}],
+    )
+
+    assert report["summary"]["total_amount_brl"] == "542.00"
+
+
+def test_missing_rate_is_an_input_error():
+    """Moeda sem taxa é entrada inválida, não erro inesperado."""
+    with pytest.raises(InputFileError):
+        convert_to_brl(Decimal("10.00"), "GBP", {"BRL": Decimal("1.000000")})

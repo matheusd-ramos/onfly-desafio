@@ -25,8 +25,9 @@
 3. Rodei o CLI na amostra `data/exemplo-validacao.csv` e conferi todos os números com a tabela de validação do enunciado.
 4. Rodei o CLI no arquivo completo e percebi que `total_reservations` era 200, embora o CSV tivesse 300 linhas — daí o defeito de truncamento.
 5. Auditei a ordenação de `top_hotels` contra a regra de desempate e corrigi a chave para `(-amount, hotel_id)`.
-6. Adicionei dois testes de regressão em `tests/test_extra_regressions.py` (arquivo novo; os cinco testes fornecidos não foram alterados).
+6. Adicionei quatro testes de regressão em `tests/test_extra_regressions.py` (arquivo novo; os cinco testes fornecidos não foram alterados): truncamento acima de 200 linhas, desempate do ranking, moeda em minúsculas e moeda sem taxa.
 7. Validei o relatório completo com um cálculo independente em `Decimal`, comparando resumo, `by_month` e `top_hotels`.
+8. Reforcei o contrato de erros: moeda sem taxa agora levanta `InputFileError` e o CLI retorna código `2` (entrada inválida), não `1`.
 
 ## Como validar
 
@@ -57,9 +58,9 @@ com `by_month` de 2024-12 a 2025-06.
 ## Resultado do `pytest`
 
 ```
-.......                                                                  [100%]
-7 passed in 0.68s
+.........                                                                [100%]
+9 passed in 0.73s
 ```
 
-São os 5 testes fornecidos (sem alteração) mais 2 testes de regressão adicionados.
+São os 5 testes fornecidos (sem alteração) mais 4 testes de regressão adicionados.
 `ruff check src tests` também passa sem avisos.
